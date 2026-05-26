@@ -1,4 +1,4 @@
-using Application.Interfaces.Services;
+using Application.UseCases.Weather;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WeatherApp.API.Controllers;
@@ -7,13 +7,18 @@ namespace WeatherApp.API.Controllers;
 [Route("api/weather")]
 public class WeatherController : ControllerBase
 {
-    
-    private readonly IWeatherProvider _weatherProvider;
+    private readonly RegisterCurrentWeatherByCityNameUseCase _registerCurrentWeatherByCityNameUseCase;
+    private readonly RegisterCurrentWeatherByCoordinatesUseCase _registerCurrentWeatherByCoordinatesUseCase;
+    private readonly GetWeatherHistoryUseCase _getWeatherHistoryUseCase;
 
     public WeatherController(
-        IWeatherProvider weatherProvider)
+        RegisterCurrentWeatherByCityNameUseCase registerCurrentWeatherByCityNameUseCase,
+        RegisterCurrentWeatherByCoordinatesUseCase registerCurrentWeatherByCoordinatesUseCase,
+        GetWeatherHistoryUseCase getWeatherHistoryUseCase)
     {
-        _weatherProvider = weatherProvider;
+        _registerCurrentWeatherByCityNameUseCase = registerCurrentWeatherByCityNameUseCase;
+        _registerCurrentWeatherByCoordinatesUseCase = registerCurrentWeatherByCoordinatesUseCase;
+        _getWeatherHistoryUseCase = getWeatherHistoryUseCase;
     }
 
     [HttpGet("city")]
@@ -21,9 +26,33 @@ public class WeatherController : ControllerBase
         [FromQuery] string city)
     {
         var weather =
-            await _weatherProvider
-                .GetWeatherDataByCityAsync(city);
+            await _registerCurrentWeatherByCityNameUseCase
+                .Execute(city);
 
         return Ok(weather);
+    }
+
+    [HttpGet("coordinates")]
+    public async Task<IActionResult> GetCurrentWeatherByCoordinates(
+        [FromQuery] double lat, [FromQuery] double lon)
+    {
+        var weather =
+            await _registerCurrentWeatherByCoordinatesUseCase
+                .Execute(lat, lon);
+
+        return Ok(weather);
+    }
+
+    [HttpGet("history")]
+    public async Task<IActionResult> GetHistory(
+        [FromQuery] string? city,
+        [FromQuery] double? lat,
+        [FromQuery] double? lon)
+    {
+        var query = WeatherHistoryQuery.Create(city, lat, lon);
+
+        var result = await _getWeatherHistoryUseCase.Execute(query);
+
+        return Ok(result);
     }
 }

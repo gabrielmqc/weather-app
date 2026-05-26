@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.ValueObjects;
 
 namespace Application.Interfaces.Repositories;
 
@@ -6,7 +7,7 @@ public interface IWeatherRecordRepository
 {
     Task<WeatherRecord> AddAsync(WeatherRecord weatherRecord);
 
-    Task<List<WeatherRecord>> GetHistoryAsync(
-        string city,
-        DateTime fromDate);
+    Task<IReadOnlyList<WeatherRecord>> GetHistoryAsync(
+        SearchCriteria criteria, 
+        int days = 30);
 }

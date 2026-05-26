@@ -1,6 +1,8 @@
 ﻿using Application.Interfaces.Repositories;
 using Domain.Entities;
+using Domain.ValueObjects;
 using Infrastructure.Persistence.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence.Repositories;
 
@@ -12,13 +14,41 @@ public class WeatherRecordRepository : IWeatherRecordRepository
     {
         _context = context;
     }
-    public Task<WeatherRecord> AddAsync(WeatherRecord weatherRecord)
+    public async Task<WeatherRecord> AddAsync(WeatherRecord weatherRecord)
     {
-        throw new NotImplementedException();
+        await _context.WeatherRecords.AddAsync(weatherRecord);
+
+        await _context.SaveChangesAsync();
+
+        return weatherRecord;
     }
 
-    public Task<List<WeatherRecord>> GetHistoryAsync(string city, DateTime fromDate)
+    public async Task<IReadOnlyList<WeatherRecord>> GetHistoryAsync(SearchCriteria criteria, int days = 30)
     {
-        throw new NotImplementedException();
+        var cutoffDate = DateTime.UtcNow.AddDays(-days);
+
+        IQueryable<WeatherRecord> query = _context.WeatherRecords
+            .AsNoTracking()
+            .Where(w => w.RecordedAt >= cutoffDate);
+
+        query = criteria switch
+        {
+            CityCriteria city =>
+                query.Where(w => w.City == city.City),
+
+            CoordinatesCriteria coordinates =>
+                query.Where(w =>
+                    w.Latitude == coordinates.Latitude &&
+                    w.Longitude == coordinates.Longitude),
+
+            _ => throw new ArgumentOutOfRangeException(
+                nameof(criteria),
+                "Unsupported search criteria")
+        };
+
+        return await query
+            .OrderByDescending(w => w.RecordedAt)
+            .ToListAsync();
     }
+    
 }
