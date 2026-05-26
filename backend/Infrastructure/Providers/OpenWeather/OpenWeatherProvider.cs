@@ -2,6 +2,7 @@
 using Application.DTOs.Request;
 using Application.DTOs.Response;
 using Application.Interfaces.Services;
+using Infrastructure.Exceptions;
 using Microsoft.Extensions.Options;
 
 namespace Infrastructure.Providers.OpenWeather;
@@ -26,36 +27,49 @@ public class OpenWeatherProvider: IWeatherProvider
     public async Task<WeatherDataProviderDTO> GetWeatherDataByCoordinatesAsync(CoordinatesDTO coordinates)
     {
         var response =
-            await _httpClient.GetFromJsonAsync<OpenWeatherResponse>(
+            await _httpClient.GetAsync(
                 $"weather?lat={coordinates.Latitude}" +
                 $"&lon={coordinates.Longitude}" +
                 $"&appid={_openWeatherOptions.ApiKey}" +
                 $"&units=metric");
 
-        if (response is null)
+        if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
         {
-            throw new Exception(
-                "Unable to retrieve weather data.");
+            throw new InfrastructureException($"No weather data found for coordinates {coordinates}.", 404);
         }
-
-        return MapToDto(response);
+    
+        response.EnsureSuccessStatusCode();
+    
+        var weatherResponse = await response.Content.ReadFromJsonAsync<OpenWeatherResponse>();
+    
+        if (weatherResponse is null)
+        {
+            throw new InfrastructureException("Unable to retrieve weather data.");
+        }
+    
+        return MapToDto(weatherResponse);
     }
 
     public async Task<WeatherDataProviderDTO> GetWeatherDataByCityAsync(string city)
     {
-        var response =
-            await _httpClient.GetFromJsonAsync<OpenWeatherResponse>(
-                $"weather?q={city}" +
-                $"&appid={_openWeatherOptions.ApiKey}" +
-                $"&units=metric");
-
-        if (response is null)
+        var response = await _httpClient.GetAsync(
+            $"weather?q={city}&appid={_openWeatherOptions.ApiKey}&units=metric");
+    
+        if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
         {
-            throw new Exception(
-                "Unable to retrieve weather data.");
+            throw new InfrastructureException($"No weather data found for city {city}.", 404);
         }
-
-        return MapToDto(response);
+    
+        response.EnsureSuccessStatusCode();
+    
+        var weatherResponse = await response.Content.ReadFromJsonAsync<OpenWeatherResponse>();
+    
+        if (weatherResponse is null)
+        {
+            throw new InfrastructureException("Unable to retrieve weather data.");
+        }
+    
+        return MapToDto(weatherResponse);
     }
     
     private static WeatherDataProviderDTO MapToDto(
