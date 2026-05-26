@@ -1,3 +1,4 @@
+using Infrastructure;
 using Infrastructure.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,6 +15,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(
         builder.Configuration.GetConnectionString("DefaultConnection"),
         b => b.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName)));
+
+builder.Services.AddInfrastructure(
+    builder.Configuration);
 
 var app = builder.Build();
 

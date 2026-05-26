@@ -4,11 +4,11 @@ using Infrastructure.Persistence.Context;
 
 namespace Infrastructure.Persistence.Repositories;
 
-public class WeatherDataRepository : IWeatherRecord
+public class WeatherRecordRepository : IWeatherRecordRepository
 {
     
     private readonly AppDbContext _context;
-    public WeatherDataRepository(AppDbContext context)
+    public WeatherRecordRepository(AppDbContext context)
     {
         _context = context;
     }

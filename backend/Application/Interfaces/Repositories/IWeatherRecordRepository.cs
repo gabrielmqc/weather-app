@@ -2,7 +2,7 @@
 
 namespace Application.Interfaces.Repositories;
 
-public interface IWeatherRecord
+public interface IWeatherRecordRepository
 {
     Task<WeatherRecord> AddAsync(WeatherRecord weatherRecord);
 
