@@ -6,5 +6,5 @@ namespace Application.Interfaces.Services;
 public interface IWeatherProvider
 {
     Task<WeatherDataProviderDTO> GetWeatherDataByCoordinatesAsync(CoordinatesDTO coordinates);
-    Task<WeatherDataProviderDTO> GetWeatherDataByCityAsync(string coordinates);
+    Task<WeatherDataProviderDTO> GetWeatherDataByCityAsync(string city);
 }
