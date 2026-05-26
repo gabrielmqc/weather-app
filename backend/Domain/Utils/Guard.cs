@@ -21,4 +21,6 @@ public class Guard
         if (value < min || value > max)
             throw new DomainException(message);
     }
+    
+   
 }

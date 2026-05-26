@@ -12,7 +12,7 @@ public class WeatherRecord
 
     public double Longitude { get; private set; }
 
-    public decimal Temperature { get; private set; }
+    public double Temperature { get; private set; }
 
     public DateTime RecordedAt { get; private set; }
     
@@ -24,23 +24,9 @@ public class WeatherRecord
         string city,
         double latitude,
         double longitude,
-        decimal temperature)
+        double temperature)
     {
-        Guard.AgainstNullOrWhiteSpace(
-            city,
-            "City cannot be empty.");
-
-        Guard.AgainstOutOfRange(
-            latitude,
-            -90,
-            90,
-            "Latitude is invalid.");
-
-        Guard.AgainstOutOfRange(
-            longitude,
-            -180,
-            180,
-            "Longitude is invalid.");
+        
         Id = Guid.NewGuid();
 
         City = city;
@@ -49,5 +35,26 @@ public class WeatherRecord
         Temperature = temperature;
 
         RecordedAt = DateTime.UtcNow;
+        
+        Validate();
+    }
+
+    private void Validate()
+    {
+        Guard.AgainstNullOrWhiteSpace(
+            City,
+            "City cannot be empty.");
+        
+        Guard.AgainstOutOfRange(
+            Latitude,
+            -90,
+            90,
+            "Latitude is invalid.");
+
+        Guard.AgainstOutOfRange(
+            Longitude,
+            -180,
+            180,
+            "Longitude is invalid.");
     }
 }
