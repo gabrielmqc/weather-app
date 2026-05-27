@@ -29,6 +29,10 @@ public static class DependencyInjection
         services.AddHttpClient<
             IWeatherProvider,
             OpenWeatherProvider>();
+        
+        services.AddHttpClient<
+            ICoordinatesProvider,
+            OpenWeatherProvider>();
 
         services.AddScoped<IWeatherRecordRepository, WeatherRecordRepository>();
 
