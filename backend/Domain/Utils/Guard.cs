@@ -9,7 +9,9 @@ public class Guard
         string message)
     {
         if (string.IsNullOrWhiteSpace(value))
+        {
             throw new DomainException(message);
+        }
     }
 
     public static void AgainstOutOfRange(
@@ -19,8 +21,8 @@ public class Guard
         string message)
     {
         if (value < min || value > max)
+        {
             throw new DomainException(message);
+        }
     }
-    
-   
 }

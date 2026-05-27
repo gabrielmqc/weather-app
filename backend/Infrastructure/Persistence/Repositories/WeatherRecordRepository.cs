@@ -16,16 +16,25 @@ public class WeatherRecordRepository : IWeatherRecordRepository
     }
     public async Task<WeatherRecord> AddAsync(WeatherRecord weatherRecord)
     {
-        await _context.WeatherRecords.AddAsync(weatherRecord);
-
-        await _context.SaveChangesAsync();
-
-        return weatherRecord;
+        await using var transaction = await _context.Database.BeginTransactionAsync();
+    
+        try
+        {
+            await _context.WeatherRecords.AddAsync(weatherRecord);
+            await _context.SaveChangesAsync();
+            await transaction.CommitAsync();
+            return weatherRecord;
+        }
+        catch
+        {
+            await transaction.RollbackAsync();
+            throw;
+        }
     }
 
     public async Task<IReadOnlyList<WeatherRecord>> GetHistoryAsync(SearchCriteria criteria, int days = 30)
     {
-        var cutoffDate = DateTime.UtcNow.AddDays(-days);
+        DateTime cutoffDate = DateTime.UtcNow.AddDays(-days);
 
         IQueryable<WeatherRecord> query = _context.WeatherRecords
             .AsNoTracking()

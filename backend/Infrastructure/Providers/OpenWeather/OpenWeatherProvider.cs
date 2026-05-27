@@ -26,7 +26,7 @@ public class OpenWeatherProvider: IWeatherProvider
 
     public async Task<WeatherDataProviderDTO> GetWeatherDataByCoordinatesAsync(CoordinatesDTO coordinates)
     {
-        var response =
+        HttpResponseMessage response =
             await _httpClient.GetAsync(
                 $"weather?lat={coordinates.Latitude}" +
                 $"&lon={coordinates.Longitude}" +
@@ -40,7 +40,7 @@ public class OpenWeatherProvider: IWeatherProvider
     
         response.EnsureSuccessStatusCode();
     
-        var weatherResponse = await response.Content.ReadFromJsonAsync<OpenWeatherResponse>();
+        OpenWeatherResponse weatherResponse = await response.Content.ReadFromJsonAsync<OpenWeatherResponse>();
     
         if (weatherResponse is null)
         {
@@ -52,7 +52,7 @@ public class OpenWeatherProvider: IWeatherProvider
 
     public async Task<WeatherDataProviderDTO> GetWeatherDataByCityAsync(string city)
     {
-        var response = await _httpClient.GetAsync(
+        HttpResponseMessage response = await _httpClient.GetAsync(
             $"weather?q={city}&appid={_openWeatherOptions.ApiKey}&units=metric");
     
         if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
@@ -62,7 +62,7 @@ public class OpenWeatherProvider: IWeatherProvider
     
         response.EnsureSuccessStatusCode();
     
-        var weatherResponse = await response.Content.ReadFromJsonAsync<OpenWeatherResponse>();
+        OpenWeatherResponse weatherResponse = await response.Content.ReadFromJsonAsync<OpenWeatherResponse>();
     
         if (weatherResponse is null)
         {

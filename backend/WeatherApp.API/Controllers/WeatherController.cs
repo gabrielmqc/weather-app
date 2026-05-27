@@ -1,3 +1,4 @@
+using Application.DTOs.Response;
 using Application.UseCases.Weather;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,10 +23,10 @@ public class WeatherController : ControllerBase
     }
 
     [HttpGet("city")]
-    public async Task<IActionResult> GetCurrentWeatherByCity(
+    public async Task<ActionResult<WeatherRecordDTO>> GetCurrentWeatherByCity(
         [FromQuery] string city)
     {
-        var weather =
+        WeatherRecordDTO weather =
             await _registerCurrentWeatherByCityNameUseCase
                 .Execute(city);
 
@@ -33,10 +34,10 @@ public class WeatherController : ControllerBase
     }
 
     [HttpGet("coordinates")]
-    public async Task<IActionResult> GetCurrentWeatherByCoordinates(
+    public async Task<ActionResult<WeatherRecordDTO>> GetCurrentWeatherByCoordinates(
         [FromQuery] double lat, [FromQuery] double lon)
     {
-        var weather =
+        WeatherRecordDTO weather =
             await _registerCurrentWeatherByCoordinatesUseCase
                 .Execute(lat, lon);
 
@@ -44,14 +45,14 @@ public class WeatherController : ControllerBase
     }
 
     [HttpGet("history")]
-    public async Task<IActionResult> GetHistory(
+    public async Task<ActionResult<IReadOnlyList<WeatherRecordDTO>>> GetHistory(
         [FromQuery] string? city,
         [FromQuery] double? lat,
         [FromQuery] double? lon)
     {
-        var query = WeatherHistoryQuery.Create(city, lat, lon);
+        WeatherHistoryQuery query = WeatherHistoryQuery.Create(city, lat, lon);
 
-        var result = await _getWeatherHistoryUseCase.Execute(query);
+        IReadOnlyList<WeatherRecordDTO> result = await _getWeatherHistoryUseCase.Execute(query);
 
         return Ok(result);
     }
