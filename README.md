@@ -23,13 +23,14 @@ docker-compose up --build
 - Health Check: http://localhost:8081/health
 
 🐳 Rodar apenas a API (Docker Hub)
+```bash
 docker run -d \
   --name desafio-csharp \
-  -p 5000:8080 \
-  -e ConnectionStrings__DefaultConnection="Host=meu-host;Database=WeatherDB;Username=admin;Password=senha123" \
-  -e OpenWeather__ApiKey="abc123def456" \
-  gabrielmqc/desafio-csharp:latest
-  
+  -p 5000:5000 \
+  -e ConnectionStrings__DefaultConnection="Host=localhost;Database=WeatherDB;Username=postgres;Password=postgres" \
+  -e OpenWeather__ApiKey="SUA_API_KEY" \
+  gabrielmqc/desafio-csharp
+```
 ⚙️ Como a aplicação funciona
 
 🌍 Arquitetura geral
