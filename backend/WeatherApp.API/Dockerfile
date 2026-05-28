@@ -1,5 +1,9 @@
 ﻿FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+
 WORKDIR /app
+
+ENV ASPNETCORE_URLS=http://+:5000
+
 EXPOSE 5000
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
@@ -37,6 +41,6 @@ RUN apt-get update && \
 COPY --from=publish /app/publish .
 
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD curl --fail http://localhost:8080/health || exit 1
+  CMD curl --fail http://localhost:5000/health || exit 1
 
 ENTRYPOINT ["dotnet", "WeatherApp.API.dll"]
