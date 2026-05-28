@@ -30,7 +30,7 @@ services:
       ConnectionStrings__DefaultConnection: ${CONNECTION_STRING}
       OpenWeather__ApiKey: ${OPENWEATHER_API_KEY}
     ports:
-      - "5000:8080"
+      - "5000:5000"
     depends_on:
       postgres:
         condition: service_healthy
