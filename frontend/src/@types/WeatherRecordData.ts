@@ -1,5 +1,6 @@
 export interface WeatherRecord {
   id: string
+  city: string
   temperature: number
   latitude: number
   longitude: number
