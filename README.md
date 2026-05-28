@@ -17,10 +17,10 @@ Aplicação full-stack permitindo registrar e consultar informações climática
 docker-compose up --build
 
 🌐 Acessos após subir
-Frontend: http://localhost:8081
-API (via proxy Nginx): http://localhost:8081/backend
-Swagger: http://localhost:8081/swagger
-Health Check: http://localhost:8081/health
+- Frontend: http://localhost:8081
+- API (via proxy Nginx): http://localhost:8081/backend
+- Swagger: http://localhost:8081/swagger/index.html
+- Health Check: http://localhost:8081/health
 
 🐳 Rodar apenas a API (Docker Hub)
 docker run -d \
