@@ -64,5 +64,6 @@ public class ExceptionMiddleware
             await context.Response.WriteAsync(
                 JsonSerializer.Serialize(response));
         }
+        
     }
 }

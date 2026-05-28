@@ -23,10 +23,10 @@ public class RegisterCurrentWeatherByCityNameUseCase
 
         WeatherDataProviderDTO weatherData = await _weatherProvider.GetWeatherDataByCityAsync(location.Name);
 
-        Domain.Entities.WeatherRecord weatherRecord = WeatherMapper.toEntity(weatherData);
+        Domain.Entities.WeatherRecord weatherRecord = WeatherMapper.ToEntity(weatherData);
         
         await _weatherRecordRepository.AddAsync(weatherRecord);
 
-        return WeatherMapper.fromEntityToResponseDTO(weatherRecord);
+        return WeatherMapper.FromEntityToResponseDTO(weatherRecord);
     }
 }

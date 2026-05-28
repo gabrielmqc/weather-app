@@ -1,5 +1,5 @@
 ﻿using Domain.Exceptions;
-using Domain.ValueObjects;
+using Domain.ValueObjects.Search;
 
 namespace Application.UseCases.Weather;
 
@@ -14,7 +14,7 @@ public class WeatherHistoryQuery
     
     public static WeatherHistoryQuery ByCity(string city)
     {
-        var criteria = CityCriteria.Create(city);
+        CityCriteria criteria = CityCriteria.Create(city);
         return new WeatherHistoryQuery(criteria);
     }
     public static WeatherHistoryQuery Create(
@@ -22,8 +22,8 @@ public class WeatherHistoryQuery
         double? lat,
         double? lon)
     {
-        var hasCity = !string.IsNullOrWhiteSpace(city);
-        var hasCoordinates = lat.HasValue || lon.HasValue;
+        Boolean hasCity = !string.IsNullOrWhiteSpace(city);
+        Boolean hasCoordinates = lat.HasValue || lon.HasValue;
 
         if (hasCity && hasCoordinates)
             throw new DomainException("Use city OR coordinates");
@@ -37,7 +37,7 @@ public class WeatherHistoryQuery
     }
     public static WeatherHistoryQuery ByCoordinates(double lat, double lon)
     {
-        var criteria = CoordinatesCriteria.Create(lat, lon);
+        CoordinatesCriteria criteria = CoordinatesCriteria.Create(lat, lon);
         return new WeatherHistoryQuery(criteria);
     }
 }

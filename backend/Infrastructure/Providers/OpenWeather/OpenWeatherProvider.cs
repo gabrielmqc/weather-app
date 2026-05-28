@@ -37,16 +37,20 @@ public class OpenWeatherProvider: IWeatherProvider, ICoordinatesProvider
 
         if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
         {
-            throw new InfrastructureException($"No weather data found for coordinates {coordinates}.", 404);
+            throw new InfrastructureException($"No weather data found for coordinates {coordinates.Latitude},{coordinates.Longitude}.", 404);
         }
     
         response.EnsureSuccessStatusCode();
     
         OpenWeatherResponse? weatherResponse = await response.Content.ReadFromJsonAsync<OpenWeatherResponse>();
-    
         if (weatherResponse is null)
         {
             throw new InfrastructureException("Unable to retrieve weather data.");
+        }
+        
+        if (String.IsNullOrWhiteSpace( weatherResponse.Name))
+        {
+            throw new InfrastructureException($"No city Found For Coordinates {coordinates.Latitude},{coordinates.Longitude}.");
         }
     
         return OpenWeatherMapper.MapWeatherResponseToDto(weatherResponse);

@@ -1,4 +1,5 @@
-﻿using Domain.Utils;
+﻿using System.Globalization;
+using Domain.Utils;
 
 namespace Domain.ValueObjects.Commands;
 
@@ -20,5 +21,10 @@ public record CoordinatesLocation : Location
         return new CoordinatesLocation(latitude, longitude);
     }
         
-    public override string Describe() => $"Lat: {Latitude}, Lon: {Longitude}";
+    public override string Describe() =>
+        string.Format(
+            CultureInfo.InvariantCulture,
+            "Lat: {0:F2}, Lon: {1:F2}",
+            Latitude,
+            Longitude);
 }

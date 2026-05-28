@@ -1,4 +1,4 @@
-﻿namespace Domain.ValueObjects;
+﻿namespace Domain.ValueObjects.Search;
 
 public abstract record SearchCriteria
 {

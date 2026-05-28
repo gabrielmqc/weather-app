@@ -19,6 +19,6 @@ public class GetWeatherHistoryUseCase
         
         var weatherRecords = await _weatherRecordRepository.GetHistoryAsync(criteria);
         
-        return WeatherMapper.fromEntityListToResponseDTOList(weatherRecords);
+        return WeatherMapper.FromEntityListToResponseDTOList(weatherRecords);
     }
 }

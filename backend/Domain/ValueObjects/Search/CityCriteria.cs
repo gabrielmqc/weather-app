@@ -1,6 +1,6 @@
 ﻿using Domain.Utils;
 
-namespace Domain.ValueObjects;
+namespace Domain.ValueObjects.Search;
 
 public record CityCriteria(string City) : SearchCriteria
 {

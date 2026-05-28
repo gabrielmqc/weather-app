@@ -20,4 +20,10 @@ RUN dotnet publish "./WeatherApp.API.csproj" -c $BUILD_CONFIGURATION -o /app/pub
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+
+
+USER root
+RUN apt-get update && apt-get install -y curl wget && rm -rf /var/lib/apt/lists/*
+USER $APP_UID
+
 ENTRYPOINT ["dotnet", "WeatherApp.API.dll"]

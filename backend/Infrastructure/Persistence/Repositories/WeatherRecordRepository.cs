@@ -1,6 +1,6 @@
 ﻿using Application.Interfaces.Repositories;
 using Domain.Entities;
-using Domain.ValueObjects;
+using Domain.ValueObjects.Search;
 using Infrastructure.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,20 +16,11 @@ public class WeatherRecordRepository : IWeatherRecordRepository
     }
     public async Task<WeatherRecord> AddAsync(WeatherRecord weatherRecord)
     {
-        await using var transaction = await _context.Database.BeginTransactionAsync();
-    
-        try
-        {
-            await _context.WeatherRecords.AddAsync(weatherRecord);
-            await _context.SaveChangesAsync();
-            await transaction.CommitAsync();
-            return weatherRecord;
-        }
-        catch
-        {
-            await transaction.RollbackAsync();
-            throw;
-        }
+        await _context.WeatherRecords.AddAsync(weatherRecord);
+
+        await _context.SaveChangesAsync();
+
+        return weatherRecord;
     }
 
     public async Task<IReadOnlyList<WeatherRecord>> GetHistoryAsync(SearchCriteria criteria, int days = 30)

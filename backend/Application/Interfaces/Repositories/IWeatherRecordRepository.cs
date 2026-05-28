@@ -1,5 +1,5 @@
 ﻿using Domain.Entities;
-using Domain.ValueObjects;
+using Domain.ValueObjects.Search;
 
 namespace Application.Interfaces.Repositories;
 

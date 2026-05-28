@@ -1,10 +1,19 @@
 using Application;
 using Infrastructure;
+using Infrastructure.Persistence.Context;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.EntityFrameworkCore;
 using WeatherApp.API.MiddleWares;
+
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+        corsPolicyBuilder => { corsPolicyBuilder.AllowAnyOrigin(); });
+});
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -22,14 +31,34 @@ builder.Services.AddInfrastructure(
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+using (var scope = app.Services.CreateScope())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    var services = scope.ServiceProvider;
+    try
+    {
+        // Obtém o DbContext (ajuste o tipo conforme seu projeto)
+        var context = services.GetRequiredService<AppDbContext>();
+
+        // Aplica as migrations pendentes
+        context.Database.Migrate();
+
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogInformation("Database migrated successfully");
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "An error occurred while migrating the database");
+    }
 }
 
+
+app.UseSwagger();
+app.UseSwaggerUI();
+
+
 app.UseHttpsRedirection();
+app.UseCors(MyAllowSpecificOrigins);
 
 app.UseAuthorization();
 
@@ -61,3 +90,5 @@ app.MapHealthChecks("/health", new HealthCheckOptions
 });
 
 app.Run();
+
+public partial class Program;

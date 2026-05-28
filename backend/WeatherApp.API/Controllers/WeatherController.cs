@@ -22,7 +22,7 @@ public class WeatherController : ControllerBase
         _getWeatherHistoryUseCase = getWeatherHistoryUseCase;
     }
 
-    [HttpGet("city")]
+    [HttpPost("city")]
     public async Task<ActionResult<WeatherRecordDTO>> GetCurrentWeatherByCity(
         [FromQuery] string city)
     {
@@ -33,7 +33,7 @@ public class WeatherController : ControllerBase
         return Ok(weather);
     }
 
-    [HttpGet("coordinates")]
+    [HttpPost("coordinates")]
     public async Task<ActionResult<WeatherRecordDTO>> GetCurrentWeatherByCoordinates(
         [FromQuery] double lat, [FromQuery] double lon)
     {
