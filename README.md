@@ -26,9 +26,9 @@ docker-compose up --build
 docker run -d \
   --name desafio-csharp \
   -p 5000:8080 \
-  -e ConnectionStrings__DefaultConnection="Host=...;Database=...;Username=...;Password=..." \
-  -e OpenWeather__ApiKey="SUA_API_KEY" \
-  seuusuario/desafio-csharp
+  -e ConnectionStrings__DefaultConnection="Host=meu-host;Database=WeatherDB;Username=admin;Password=senha123" \
+  -e OpenWeather__ApiKey="abc123def456" \
+  gabrielmqc/desafio-csharp:latest
   
 ⚙️ Como a aplicação funciona
 
