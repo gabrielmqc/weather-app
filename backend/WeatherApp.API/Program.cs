@@ -21,9 +21,18 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddHealthChecks()
-    .AddNpgSql(
-        builder.Configuration.GetConnectionString("DefaultConnection")!);
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+if (!string.IsNullOrEmpty(connectionString))
+{
+    builder.Services.AddHealthChecks()
+        .AddNpgSql(connectionString, name: "postgresql", tags: new[] { "database" });
+}
+else
+{
+    builder.Services.AddHealthChecks();
+}
+
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(
