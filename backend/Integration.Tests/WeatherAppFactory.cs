@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Moq;
 
 namespace Integration.Tests;
@@ -21,6 +22,15 @@ public class WeatherAppFactory : WebApplicationFactory<Program>
     {
         builder.ConfigureTestServices(services =>
         {
+            var descriptors = services
+                .Where(d => d.ServiceType == typeof(HealthCheckService) ||
+                            d.ServiceType.Name.Contains("IHealthCheck"))
+                .ToList();
+        
+            foreach (var descriptor in descriptors)
+            {
+                services.Remove(descriptor);
+            }
             services.RemoveAll<AppDbContext>();
             services.RemoveAll<DbContextOptions<AppDbContext>>();
 
