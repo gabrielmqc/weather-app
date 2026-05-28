@@ -19,7 +19,7 @@ docker-compose up --build
 🌐 Acessos após subir
 - Frontend: http://localhost:8081
 - API (via proxy Nginx): http://localhost:8081/backend
-- Swagger: http://localhost:8081/swagger/index.html
+- Swagger: http://localhost:8081/backend/swagger/index.html
 - Health Check: http://localhost:8081/health
 
 🐳 Rodar apenas a API (Docker Hub)
