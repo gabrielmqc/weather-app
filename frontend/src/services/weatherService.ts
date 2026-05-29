@@ -27,10 +27,8 @@ export const weatherService = {
     return response.data
   },
 
-  async searchCities(city: string): Promise<CoordinatesData[]> {
-    const response = await api.get<CoordinatesData[]>(
-      `/api/location/city?city=${encodeURIComponent(city)}`,
-    )
+  async getAllCitiesRegistered(): Promise<string[]> {
+    const response = await api.get<string[]>(`/api/weather/cities`)
     return response.data
   },
 }

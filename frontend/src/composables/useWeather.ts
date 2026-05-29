@@ -1,3 +1,4 @@
+// composables/useWeather.ts
 import { ref, computed } from 'vue'
 import { useWeatherStore } from '@/stores/weather'
 import type { CoordinatesData } from '@/@types/CoordinatesData'
@@ -11,6 +12,7 @@ export function useWeather() {
   const currentWeather = computed(() => store.currentWeather)
   const weatherHistory = computed(() => store.weatherHistory)
   const cityResults = computed(() => store.cityResults)
+  const registeredCities = computed(() => store.registeredCities)
   const selectedCity = computed(() => store.selectedCity)
   const loading = computed(() => store.loading)
   const error = computed(() => store.error)
@@ -59,6 +61,7 @@ export function useWeather() {
     currentWeather,
     weatherHistory,
     cityResults,
+    registeredCities,
     selectedCity,
     loading,
     error,
@@ -67,6 +70,7 @@ export function useWeather() {
     selectCity,
     searchByCoordinates,
     fetchHistory: store.fetchHistory,
+    fetchRegisteredCities: store.fetchRegisteredCities,
     clearSearch,
   }
 }

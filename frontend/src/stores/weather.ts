@@ -9,6 +9,7 @@ export const useWeatherStore = defineStore('weather', () => {
   const currentWeather = ref<WeatherRecord | null>(null)
   const weatherHistory = ref<WeatherRecord[]>([])
   const cityResults = ref<CoordinatesData[]>([])
+  const registeredCities = ref<string[]>([])
   const selectedCity = ref<CoordinatesData | null>(null)
   const loading = ref(false)
   const error = ref<string | null>(null)
@@ -105,6 +106,21 @@ export const useWeatherStore = defineStore('weather', () => {
     }
   }
 
+  async function fetchRegisteredCities() {
+    loading.value = true
+    error.value = null
+
+    try {
+      registeredCities.value = await weatherService.getAllCitiesRegistered()
+      return registeredCities.value
+    } catch (err) {
+      setError(err)
+      throw err
+    } finally {
+      loading.value = false
+    }
+  }
+
   function clearError() {
     error.value = null
   }
@@ -113,6 +129,7 @@ export const useWeatherStore = defineStore('weather', () => {
     currentWeather,
     weatherHistory,
     cityResults,
+    registeredCities,
     selectedCity,
     loading,
     error,
@@ -121,6 +138,7 @@ export const useWeatherStore = defineStore('weather', () => {
     searchByCity,
     searchByCoordinates,
     fetchHistory,
+    fetchRegisteredCities,
     clearError,
   }
 })
