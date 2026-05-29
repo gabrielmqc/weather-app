@@ -23,10 +23,6 @@ public class WeatherProviderFactory : IWeatherProviderFactory
 {
     var providerName = _configuration["FeatureFlags:WeatherProvider"];
 
-    Console.WriteLine("================================");
-    Console.WriteLine($"PROVIDER ESCOLHIDO: {providerName}");
-    Console.WriteLine("================================");
-
     return providerName?.ToLower() switch
     {
         "openweather" => _serviceProvider.GetRequiredService<OpenWeatherProvider>(),
