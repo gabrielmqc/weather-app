@@ -10,4 +10,6 @@ public interface IWeatherRecordRepository
     Task<IReadOnlyList<WeatherRecord>> GetHistoryAsync(
         SearchCriteria criteria, 
         int days = 30);
+
+    Task<IReadOnlyList<string>> GetAllCitiesRegistered();
 }

@@ -11,15 +11,18 @@ public class WeatherController : ControllerBase
     private readonly RegisterCurrentWeatherByCityNameUseCase _registerCurrentWeatherByCityNameUseCase;
     private readonly RegisterCurrentWeatherByCoordinatesUseCase _registerCurrentWeatherByCoordinatesUseCase;
     private readonly GetWeatherHistoryUseCase _getWeatherHistoryUseCase;
+    private readonly GetAllCitiesRegisteredUseCase _getAllCitiesRegisteredUseCase;
 
     public WeatherController(
         RegisterCurrentWeatherByCityNameUseCase registerCurrentWeatherByCityNameUseCase,
         RegisterCurrentWeatherByCoordinatesUseCase registerCurrentWeatherByCoordinatesUseCase,
-        GetWeatherHistoryUseCase getWeatherHistoryUseCase)
+        GetWeatherHistoryUseCase getWeatherHistoryUseCase,
+        GetAllCitiesRegisteredUseCase getAllCitiesRegisteredUseCase)
     {
         _registerCurrentWeatherByCityNameUseCase = registerCurrentWeatherByCityNameUseCase;
         _registerCurrentWeatherByCoordinatesUseCase = registerCurrentWeatherByCoordinatesUseCase;
         _getWeatherHistoryUseCase = getWeatherHistoryUseCase;
+        _getAllCitiesRegisteredUseCase = getAllCitiesRegisteredUseCase;
     }
 
     [HttpPost("city")]
@@ -53,6 +56,15 @@ public class WeatherController : ControllerBase
         WeatherHistoryQuery query = WeatherHistoryQuery.Create(city, lat, lon);
 
         IReadOnlyList<WeatherRecordDTO> result = await _getWeatherHistoryUseCase.Execute(query);
+
+        return Ok(result);
+    }
+    
+    [HttpGet("cities")]
+    public async Task<ActionResult<IReadOnlyList<WeatherRecordDTO>>> GetCitiesRegistered()
+    {
+
+        IReadOnlyList<string> result = await _getAllCitiesRegisteredUseCase.Execute();
 
         return Ok(result);
     }

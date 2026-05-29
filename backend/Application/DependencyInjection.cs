@@ -16,6 +16,8 @@ public static class DependencyInjection
         services.AddScoped<RegisterCurrentWeatherByCoordinatesUseCase>();
         
         services.AddScoped<GetCityLocationsByNameUsecase>();
+
+        services.AddScoped<GetAllCitiesRegisteredUseCase>();
         
         return services;
     }

@@ -1,4 +1,6 @@
-﻿using Domain.Utils;
+﻿using System.Globalization;
+using System.Text;
+using Domain.Utils;
 
 namespace Domain.Entities;
 
@@ -7,6 +9,8 @@ public class WeatherRecord
     public Guid Id { get; private init; }
     
     public string City { get; private set; } = string.Empty;
+    
+    public string NormalizedCity  { get; private set; } = string.Empty;
 
     public double Latitude { get; private set; }
 
@@ -29,13 +33,14 @@ public class WeatherRecord
         
         Id = Guid.NewGuid();
 
-        City = city;
+        City = city.Trim();
+        NormalizedCity = StringNormalizer.Normalize(city);
         Latitude = latitude;
         Longitude = longitude;
         Temperature = temperature;
 
         RecordedAt = DateTime.UtcNow;
-        
+
         Validate();
     }
 
@@ -57,4 +62,5 @@ public class WeatherRecord
             180,
             "Longitude is invalid.");
     }
+
 }

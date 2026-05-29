@@ -34,7 +34,7 @@ public class WeatherRecordRepository : IWeatherRecordRepository
         query = criteria switch
         {
             CityCriteria city =>
-                query.Where(w => w.City == city.City),
+                query.Where(w => w.NormalizedCity.Contains(city.City)),
 
             CoordinatesCriteria coordinates =>
                 query.Where(w =>
@@ -50,5 +50,14 @@ public class WeatherRecordRepository : IWeatherRecordRepository
             .OrderByDescending(w => w.RecordedAt)
             .ToListAsync();
     }
-    
+
+    public async Task<IReadOnlyList<string>> GetAllCitiesRegistered()
+    {
+        return await _context.WeatherRecords
+            .AsNoTracking()
+            .Select(w => w.City)
+            .Distinct()
+            .OrderBy(city => city)
+            .ToListAsync();
+    }
 }

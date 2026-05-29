@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Persistence.Configurations;
 
-public class WeatherRecordConfiguration: IEntityTypeConfiguration<WeatherRecord>
+public class WeatherRecordConfiguration : IEntityTypeConfiguration<WeatherRecord>
 {
     public void Configure(EntityTypeBuilder<WeatherRecord> builder)
     {
@@ -15,13 +15,17 @@ public class WeatherRecordConfiguration: IEntityTypeConfiguration<WeatherRecord>
         builder.Property(x => x.City)
             .IsRequired()
             .HasMaxLength(200);
-        
+
+        builder.Property(x => x.NormalizedCity)
+            .IsRequired()
+            .HasMaxLength(200);
+
         builder.Property(x => x.Temperature)
             .HasPrecision(5, 2);
 
         builder.Property(x => x.RecordedAt)
             .HasColumnType("timestamp with time zone");
-        
+
         builder.Property(x => x.Latitude)
             .HasPrecision(9, 6)
             .IsRequired();
@@ -29,8 +33,8 @@ public class WeatherRecordConfiguration: IEntityTypeConfiguration<WeatherRecord>
         builder.Property(x => x.Longitude)
             .HasPrecision(9, 6)
             .IsRequired();
-        
-        builder.HasIndex(x => x.City);
+
+        builder.HasIndex(x => x.NormalizedCity);
 
         builder.HasIndex(x => new
         {
