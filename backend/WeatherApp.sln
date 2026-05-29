@@ -1,0 +1,59 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherApp.API", "WeatherApp.API\WeatherApp.API.csproj", "{E4ED0224-789D-4278-A4B6-111BEEC8FA1C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{E85186F8-739C-4A73-A5AC-8973230D9329}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{58A0AC11-5791-4882-B4F0-9C3043656D10}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{3DD3FBD9-8F73-4223-9013-127DED583133}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D73BFDE4-A1FF-47F1-A315-4DCCD46BC8F7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain.Tests", "Domain.Tests\Domain.Tests.csproj", "{63D3367F-BFB2-4653-8B58-FAD7CF9B87AF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.Tests", "Application.Tests\Application.Tests.csproj", "{533C9EA8-7663-4003-94F7-CE8F65C9DC5B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Integration.Tests", "Integration.Tests\Integration.Tests.csproj", "{D985B210-60F5-40E4-819F-CAABC97A4BAA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E4ED0224-789D-4278-A4B6-111BEEC8FA1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4ED0224-789D-4278-A4B6-111BEEC8FA1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4ED0224-789D-4278-A4B6-111BEEC8FA1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4ED0224-789D-4278-A4B6-111BEEC8FA1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E85186F8-739C-4A73-A5AC-8973230D9329}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E85186F8-739C-4A73-A5AC-8973230D9329}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E85186F8-739C-4A73-A5AC-8973230D9329}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E85186F8-739C-4A73-A5AC-8973230D9329}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58A0AC11-5791-4882-B4F0-9C3043656D10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58A0AC11-5791-4882-B4F0-9C3043656D10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58A0AC11-5791-4882-B4F0-9C3043656D10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58A0AC11-5791-4882-B4F0-9C3043656D10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3DD3FBD9-8F73-4223-9013-127DED583133}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DD3FBD9-8F73-4223-9013-127DED583133}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DD3FBD9-8F73-4223-9013-127DED583133}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DD3FBD9-8F73-4223-9013-127DED583133}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63D3367F-BFB2-4653-8B58-FAD7CF9B87AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63D3367F-BFB2-4653-8B58-FAD7CF9B87AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63D3367F-BFB2-4653-8B58-FAD7CF9B87AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63D3367F-BFB2-4653-8B58-FAD7CF9B87AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{533C9EA8-7663-4003-94F7-CE8F65C9DC5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{533C9EA8-7663-4003-94F7-CE8F65C9DC5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{533C9EA8-7663-4003-94F7-CE8F65C9DC5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{533C9EA8-7663-4003-94F7-CE8F65C9DC5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D985B210-60F5-40E4-819F-CAABC97A4BAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D985B210-60F5-40E4-819F-CAABC97A4BAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D985B210-60F5-40E4-819F-CAABC97A4BAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D985B210-60F5-40E4-819F-CAABC97A4BAA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{63D3367F-BFB2-4653-8B58-FAD7CF9B87AF} = {D73BFDE4-A1FF-47F1-A315-4DCCD46BC8F7}
+		{533C9EA8-7663-4003-94F7-CE8F65C9DC5B} = {D73BFDE4-A1FF-47F1-A315-4DCCD46BC8F7}
+		{D985B210-60F5-40E4-819F-CAABC97A4BAA} = {D73BFDE4-A1FF-47F1-A315-4DCCD46BC8F7}
+	EndGlobalSection
+EndGlobal
