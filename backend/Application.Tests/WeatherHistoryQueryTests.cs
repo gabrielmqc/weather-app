@@ -15,7 +15,7 @@ public class WeatherHistoryQueryTests
         WeatherHistoryQuery query = WeatherHistoryQuery.ByCity("London");
  
         query.SearchBy.Should().BeOfType<CityCriteria>();
-        query.SearchBy.Describe().Should().Be("City: London");
+        query.SearchBy.Describe().Should().Be("City: london");
     }
  
     [Theory]

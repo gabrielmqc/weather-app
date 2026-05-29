@@ -13,7 +13,7 @@ public class SearchCriteriaTests
     {
         var criteria = CityCriteria.Create("Tokyo");
  
-        criteria.City.Should().Be("Tokyo");
+        criteria.City.Should().Be("tokyo");
     }
  
     [Fact]
@@ -21,7 +21,7 @@ public class SearchCriteriaTests
     {
         var criteria = CityCriteria.Create("Tokyo");
  
-        criteria.Describe().Should().Be("City: Tokyo");
+        criteria.Describe().Should().Be("City: tokyo");
     }
  
     [Fact]

@@ -12,6 +12,7 @@ namespace Application.Tests;
 
 public class RegisterCurrentWeatherByCityNameUseCaseTests
 {
+    private readonly Mock<IWeatherProviderFactory> _weatherProviderFactoryMock;
     private readonly Mock<IWeatherProvider> _weatherProviderMock;
     private readonly Mock<IWeatherRecordRepository> _repositoryMock;
     private readonly RegisterCurrentWeatherByCityNameUseCase _sut;
@@ -19,9 +20,15 @@ public class RegisterCurrentWeatherByCityNameUseCaseTests
     public RegisterCurrentWeatherByCityNameUseCaseTests()
     {
         _weatherProviderMock = new Mock<IWeatherProvider>();
+        _weatherProviderFactoryMock = new Mock<IWeatherProviderFactory>();
         _repositoryMock = new Mock<IWeatherRecordRepository>();
+        
+        _weatherProviderFactoryMock
+            .Setup(f => f.GetProvider())
+            .Returns(_weatherProviderMock.Object);
+        
         _sut = new RegisterCurrentWeatherByCityNameUseCase(
-            _weatherProviderMock.Object,
+            _weatherProviderFactoryMock.Object,
             _repositoryMock.Object);
     }
 

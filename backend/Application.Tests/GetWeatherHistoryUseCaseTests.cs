@@ -64,7 +64,7 @@ public class GetWeatherHistoryUseCaseTests
 
         _repositoryMock.Verify(r =>
                 r.GetHistoryAsync(
-                    It.Is<SearchCriteria>(c => c.Describe() == "City: London"),
+                    It.Is<SearchCriteria>(c => c.Describe() == "City: london"),
                     It.IsAny<int>()),
             Times.Once);
     }

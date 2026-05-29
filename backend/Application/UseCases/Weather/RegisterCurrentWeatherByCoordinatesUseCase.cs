@@ -9,12 +9,12 @@ namespace Application.UseCases.Weather;
 
 public class RegisterCurrentWeatherByCoordinatesUseCase
 {
-    private readonly IWeatherProvider _weatherProvider;
+    private readonly IWeatherProviderFactory _weatherProviderFactory;
     private readonly IWeatherRecordRepository _weatherRecordRepository;
 
-    public RegisterCurrentWeatherByCoordinatesUseCase(IWeatherProvider weatherProvider, IWeatherRecordRepository weatherRecordRepository)
+    public RegisterCurrentWeatherByCoordinatesUseCase(IWeatherProviderFactory weatherProviderFactory, IWeatherRecordRepository weatherRecordRepository)
     {
-        _weatherProvider = weatherProvider;
+        _weatherProviderFactory = weatherProviderFactory;
         _weatherRecordRepository = weatherRecordRepository;
     }
 
@@ -24,7 +24,9 @@ public class RegisterCurrentWeatherByCoordinatesUseCase
         
         CoordinatesDTO coordinates = new CoordinatesDTO(location.Latitude, location.Longitude);
         
-        WeatherDataProviderDTO weatherData = await _weatherProvider.GetWeatherDataByCoordinatesAsync(coordinates);
+        var weatherProvider = _weatherProviderFactory.GetProvider();
+
+        WeatherDataProviderDTO weatherData = await weatherProvider.GetWeatherDataByCoordinatesAsync(coordinates);
 
         Domain.Entities.WeatherRecord weatherRecord = WeatherMapper.ToEntity(weatherData);
         

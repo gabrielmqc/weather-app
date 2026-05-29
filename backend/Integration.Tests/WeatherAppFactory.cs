@@ -37,8 +37,10 @@ public class WeatherAppFactory : WebApplicationFactory<Program>
             RemoveService<IWeatherProvider>(services);
             RemoveService<ICoordinatesProvider>(services);
 
-            services.AddScoped<IWeatherProvider>(_ =>
-                WeatherProviderMock.Object);
+            var factoryMock = new Mock<IWeatherProviderFactory>();
+            factoryMock.Setup(f => f.GetProvider()).Returns(WeatherProviderMock.Object);
+            services.AddScoped(_ => factoryMock.Object);
+
 
             services.AddScoped<ICoordinatesProvider>(_ =>
                 CoordinatesProviderMock.Object);

@@ -33,7 +33,7 @@ public class WeatherRecord
         
         Id = Guid.NewGuid();
 
-        City = city.Trim();
+        City = city;
         NormalizedCity = StringNormalizer.Normalize(city);
         Latitude = latitude;
         Longitude = longitude;
