@@ -14,6 +14,9 @@ Aplicação full-stack permitindo registrar e consultar informações climática
 
 ## ▶️ Subir toda a aplicação
 
+# Variáveis de ambiente
+Antes de iniciar o composer crie um .env na raiz do repositorio com os campos que estão sendo exemplificados no .env.example, com uma chave de API valida do OpenWeather
+
 docker-compose up --build
 
 🌐 Acessos após subir
