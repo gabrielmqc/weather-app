@@ -95,4 +95,3 @@ Aplicação totalmente containerizada
 Suporte a docker-compose e execução standalone via Docker Hub
 Configuração via variáveis de ambiente
 Migrations aplicadas automaticamente no startup
-É possível alterar o WeatherProvider utilizando Flags no appsetings.json, basta trocar o UseMockProvider de false para true
