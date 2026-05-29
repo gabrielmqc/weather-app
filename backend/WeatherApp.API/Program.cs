@@ -62,14 +62,17 @@ using (var scope = app.Services.CreateScope())
 }
 
 
-app.UsePathBase("/backend");
 
-app.UseSwagger();
+app.UseSwagger(c =>
+{
+    c.RouteTemplate = "swagger/{documentName}/swagger.json";
+});
 
 app.UseSwaggerUI(c =>
 {
     c.RoutePrefix = "swagger";
-    c.SwaggerEndpoint("/backend/swagger/v1/swagger.json", "Weather API V1");
+
+    c.SwaggerEndpoint("./v1/swagger.json", "Weather API V1");
 });
 
 app.UseHttpsRedirection();

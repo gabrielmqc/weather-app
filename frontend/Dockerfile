@@ -12,9 +12,6 @@ WORKDIR /app
 
 RUN corepack enable
 
-ARG VITE_API_URL_PROD
-ENV VITE_API_URL_PROD=$VITE_API_URL_PROD
-
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 

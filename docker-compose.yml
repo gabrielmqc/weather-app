@@ -29,6 +29,8 @@ services:
       ASPNETCORE_ENVIRONMENT: Production
       ConnectionStrings__DefaultConnection: ${CONNECTION_STRING}
       OpenWeather__ApiKey: ${OPENWEATHER_API_KEY}
+      FeatureFlags__WeatherProvider: ${WEATHER_PROVIDER}
+
     ports:
       - "5000:5000"
     depends_on:

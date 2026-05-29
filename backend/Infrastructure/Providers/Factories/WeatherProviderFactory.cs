@@ -20,20 +20,18 @@ public class WeatherProviderFactory : IWeatherProviderFactory
     }
 
     public IWeatherProvider GetProvider()
+{
+    var providerName = _configuration["FeatureFlags:WeatherProvider"];
+
+    Console.WriteLine("================================");
+    Console.WriteLine($"PROVIDER ESCOLHIDO: {providerName}");
+    Console.WriteLine("================================");
+
+    return providerName?.ToLower() switch
     {
-        var providerName = _configuration["FeatureFlags:WeatherProvider"];
-        var useMock = _configuration.GetValue<bool>("FeatureFlags:UseMockProvider");
-        
-        if (useMock)
-        {
-            return _serviceProvider.GetRequiredService<MockWeatherProvider>();
-        }
-        
-        return providerName?.ToLower() switch
-        {
-            "openweather" => _serviceProvider.GetRequiredService<OpenWeatherProvider>(),
-            "mock" => _serviceProvider.GetRequiredService<MockWeatherProvider>(),
-            _ => _serviceProvider.GetRequiredService<OpenWeatherProvider>()
-        };
-    }
+        "openweather" => _serviceProvider.GetRequiredService<OpenWeatherProvider>(),
+        "mock" => _serviceProvider.GetRequiredService<MockWeatherProvider>(),
+        _ => _serviceProvider.GetRequiredService<OpenWeatherProvider>()
+    };
+}
 }
